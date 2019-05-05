@@ -32,7 +32,9 @@ class ConvictionRecordDataTable extends DataTable
      */
     public function query(ConvictionRecord $model)
     {
-        return $model->newQuery()->with('convict');
+        return $model->newQuery()
+            ->join('convicts', 'conviction_records.convict_id', '=', 'convicts.id')
+            ->select('conviction_records.*', 'convicts.name', 'convicts.surname', 'convicts.id_card_number');
     }
 
     /**
@@ -69,8 +71,8 @@ class ConvictionRecordDataTable extends DataTable
     {
         return [
             [
-                'data' => 'convict.full_name_id_card',
-                'name' => 'convict.name',
+                'data' => 'name',
+                'name' => 'name',
                 'title' => 'Convict',
             ],
             [

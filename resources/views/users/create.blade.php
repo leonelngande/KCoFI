@@ -3,7 +3,7 @@
 @section('content')
     <section class="content-header">
         <h1>
-            User
+            Administrator
         </h1>
     </section>
     <div class="content">
@@ -12,11 +12,14 @@
 
             <div class="box-body">
                 <div class="row">
-                    {!! Form::open(['route' => 'users.store']) !!}
+                    {{--{!! Form::open(['route' => 'users.store']) !!}
 
                         @include('users.fields')
 
-                    {!! Form::close() !!}
+                    {!! Form::close() !!}--}}
+                    <div class="col-md-12">
+                        @include('auth.form_register')
+                    </div>
                 </div>
             </div>
         </div>

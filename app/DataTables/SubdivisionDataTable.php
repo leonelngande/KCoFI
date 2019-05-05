@@ -31,7 +31,9 @@ class SubdivisionDataTable extends DataTable
      */
     public function query(Subdivision $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()
+            ->join('divisions', 'subdivisions.division_id', '=', 'divisions.id')
+            ->select('subdivisions.*', 'divisions.name AS division');
     }
 
     /**
@@ -68,7 +70,11 @@ class SubdivisionDataTable extends DataTable
     {
         return [
             'name',
-            'division_id'
+            [
+                'data' => 'division',
+                'name' => 'division',
+                'title' => 'Division',
+            ],
         ];
     }
 

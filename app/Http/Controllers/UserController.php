@@ -7,8 +7,10 @@ use App\Http\Requests;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Repositories\UserRepository;
+use Exception;
 use Flash;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Support\Facades\Hash;
 use Response;
 
 class UserController extends AppBaseController
@@ -52,6 +54,9 @@ class UserController extends AppBaseController
     public function store(CreateUserRequest $request)
     {
         $input = $request->all();
+        if ($request->has('password')) {
+            $input->password = Hash::make($input['password']);
+        }
 
         $user = $this->userRepository->create($input);
 
@@ -118,7 +123,11 @@ class UserController extends AppBaseController
             return redirect(route('users.index'));
         }
 
-        $user = $this->userRepository->update($request->all(), $id);
+        $input = $request->all();
+        if ($request->has('password')) {
+            $input->password = Hash::make($input['password']);
+        }
+        $user = $this->userRepository->update($input, $id);
 
         Flash::success('User updated successfully.');
 
@@ -128,9 +137,10 @@ class UserController extends AppBaseController
     /**
      * Remove the specified User from storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
+     * @throws Exception
      */
     public function destroy($id)
     {

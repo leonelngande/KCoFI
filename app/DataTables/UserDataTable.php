@@ -72,8 +72,6 @@ class UserDataTable extends DataTable
             'phone',
             'address',
             'username',
-            'password',
-            'remember_token'
         ];
     }
 

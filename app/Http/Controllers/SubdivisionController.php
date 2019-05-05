@@ -6,6 +6,8 @@ use App\DataTables\SubdivisionDataTable;
 use App\Http\Requests;
 use App\Http\Requests\CreateSubdivisionRequest;
 use App\Http\Requests\UpdateSubdivisionRequest;
+use App\Models\Division;
+use App\Models\Subdivision;
 use App\Repositories\SubdivisionRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
@@ -39,7 +41,9 @@ class SubdivisionController extends AppBaseController
      */
     public function create()
     {
-        return view('subdivisions.create');
+        $divisions = ['' => 'Select a division'] + Division::get()->pluck('name', 'id')->toArray();
+        $selected = app('request')->get('division');
+        return view('subdivisions.create')->with(compact(['divisions', 'selected']));
     }
 
     /**
@@ -69,7 +73,7 @@ class SubdivisionController extends AppBaseController
      */
     public function show($id)
     {
-        $subdivision = $this->subdivisionRepository->find($id);
+        $subdivision = Subdivision::with('division')->find($id);
 
         if (empty($subdivision)) {
             Flash::error('Subdivision not found');
@@ -90,6 +94,7 @@ class SubdivisionController extends AppBaseController
     public function edit($id)
     {
         $subdivision = $this->subdivisionRepository->find($id);
+        $divisions = ['' => 'Select a division'] + Division::get()->pluck('name', 'id')->toArray();
 
         if (empty($subdivision)) {
             Flash::error('Subdivision not found');
@@ -97,7 +102,7 @@ class SubdivisionController extends AppBaseController
             return redirect(route('subdivisions.index'));
         }
 
-        return view('subdivisions.edit')->with('subdivision', $subdivision);
+        return view('subdivisions.edit')->with(compact(['subdivision', 'divisions']));
     }
 
     /**
