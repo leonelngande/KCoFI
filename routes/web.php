@@ -18,4 +18,16 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('users', 'UserController');
+
+Route::resource('divisions', 'DivisionController');
+
+Route::resource('subdivisions', 'SubdivisionController');
+
+Route::resource('certificates', 'CertificateController');
+
+Route::resource('convicts', 'ConvictController');
+
+Route::resource('convictionRecords', 'ConvictionRecordController');
