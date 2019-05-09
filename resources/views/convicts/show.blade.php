@@ -23,15 +23,15 @@
             </div>
         </div>
 
-        <div class="clearfix"></div>
+        {{--<div class="clearfix"></div>
         <div class="box box-primary">
             <div class="box-body">
                 {!! $html->table(['class' => 'table table-bordered'], true) !!}
             </div>
-        </div>
+        </div>--}}
     </div>
 @endsection
 
-@push('scripts')
+{{--@push('scripts')
     {!! $html->scripts() !!}
-@endpush
+@endpush--}}

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\CertificateDataTable;
+use App\Http\Requests\BeforeCreateCertificateRequest;
 use App\Http\Requests\CreateCertificateRequest;
 use App\Http\Requests\UpdateCertificateRequest;
 use App\Models\Convict;
@@ -34,10 +35,10 @@ class CertificateController extends AppBaseController
     /**
      * Show the form for creating a new Certificate.
      *
-     * @param Request $request
+     * @param BeforeCreateCertificateRequest $request
      * @return array
      */
-    public function create(Request $request)
+    public function create(BeforeCreateCertificateRequest $request)
     {
         $idCardNumber = $request->get('id_card_number');
         $convict = Convict::with('convictionRecords')->where('id_card_number', $idCardNumber)->first();
