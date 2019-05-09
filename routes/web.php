@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
 
 
 Auth::routes([
@@ -22,16 +22,22 @@ Auth::routes([
     'reset' => false
 ]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => 'auth'], function() {
 
-Route::resource('users', 'UserController');
+    Route::get('/', 'HomeController@index')->name('home');
 
-Route::resource('divisions', 'DivisionController');
+    Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('subdivisions', 'SubdivisionController');
+    Route::resource('users', 'UserController');
 
-Route::resource('certificates', 'CertificateController');
+    Route::resource('divisions', 'DivisionController');
 
-Route::resource('convicts', 'ConvictController');
+    Route::resource('subdivisions', 'SubdivisionController');
 
-Route::resource('convictionRecords', 'ConvictionRecordController');
+    Route::resource('certificates', 'CertificateController');
+
+    Route::resource('convicts', 'ConvictController');
+
+    Route::resource('convictionRecords', 'ConvictionRecordController');
+
+});

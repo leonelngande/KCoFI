@@ -69,9 +69,9 @@ class UserDataTable extends DataTable
         return [
             'name',
             'email',
-            'phone',
+            /*'phone',
             'address',
-            'username',
+            'username',*/
         ];
     }
 

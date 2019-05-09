@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\CertificateDataTable;
-use App\Http\Requests;
 use App\Http\Requests\CreateCertificateRequest;
 use App\Http\Requests\UpdateCertificateRequest;
+use App\Models\Convict;
 use App\Repositories\CertificateRepository;
-use Flash;
-use App\Http\Controllers\AppBaseController;
-use Response;
+use Illuminate\Http\Request;
+use Laracasts\Flash\Flash;
 
 class CertificateController extends AppBaseController
 {
@@ -35,10 +34,21 @@ class CertificateController extends AppBaseController
     /**
      * Show the form for creating a new Certificate.
      *
-     * @return Response
+     * @param Request $request
+     * @return array
      */
-    public function create()
+    public function create(Request $request)
     {
+        $idCardNumber = $request->get('id_card_number');
+        $convict = Convict::with('convictionRecords')->where('id_card_number', $idCardNumber)->first();
+
+        if (!empty($convict)) {
+            // Redirect to convict detail page since a certificate can't be created for a convict
+             Flash::error("Permission denied: convict found with Id Card Number $idCardNumber");
+
+            return redirect(route('convicts.show', $convict->id));
+        }
+
         return view('certificates.create');
     }
 

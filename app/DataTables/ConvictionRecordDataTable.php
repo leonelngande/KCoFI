@@ -74,6 +74,7 @@ class ConvictionRecordDataTable extends DataTable
                 'data' => 'name',
                 'name' => 'name',
                 'title' => 'Convict',
+                'searchable' => 'false',
             ],
             [
                 'data' => 'date_of_conviction',

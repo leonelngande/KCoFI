@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\ConvictDataTable;
+use App\DataTables\ConvictionRecordDataTable;
 use App\Http\Requests;
 use App\Http\Requests\CreateConvictRequest;
 use App\Http\Requests\UpdateConvictRequest;
 use App\Models\Convict;
+use App\Models\ConvictionRecord;
 use App\Models\Subdivision;
 use App\Repositories\ConvictRepository;
 use Flash;
@@ -73,7 +75,7 @@ class ConvictController extends AppBaseController
      */
     public function show($id)
     {
-        $convict = Convict::with('subdivision')->find($id);
+        $convict = Convict::with(['subdivision', 'convictionRecords'])->find($id);
 
         if (empty($convict)) {
             Flash::error('Convict not found');
@@ -81,7 +83,12 @@ class ConvictController extends AppBaseController
             return redirect(route('convicts.index'));
         }
 
-        return view('convicts.show')->with('convict', $convict);
+        $convictRecordDataTable = new ConvictionRecordDataTable();
+        $convictionRecordModel = new ConvictionRecord();
+        $convictRecordDataTable->query($convictionRecordModel);
+        $html = $convictRecordDataTable->html();
+
+        return view('convicts.show', compact(['convict', 'html']));
     }
 
     /**

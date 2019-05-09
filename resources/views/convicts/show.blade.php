@@ -2,6 +2,9 @@
 
 @section('content')
     <section class="content-header">
+
+        @include('flash::message')
+
         <h1>
             Convict - {{$convict->full_name_id_card}}
             <a class="btn btn-primary pull-right" href="{!! route('convictionRecords.create', ['convict' => $convict->id]) !!}">Add Conviction Record</a>
@@ -19,5 +22,16 @@
                 </div>
             </div>
         </div>
+
+        <div class="clearfix"></div>
+        <div class="box box-primary">
+            <div class="box-body">
+                {!! $html->table(['class' => 'table table-bordered'], true) !!}
+            </div>
+        </div>
     </div>
 @endsection
+
+@push('scripts')
+    {!! $html->scripts() !!}
+@endpush
