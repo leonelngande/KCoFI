@@ -32,10 +32,11 @@
     <![endif]-->
 
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background: linear-gradient(90deg, #efd5ff 0%, #515ada 100%);">
 <div class="login-box">
     <div class="login-logo">
         <a href="{{ url('/home') }}"><b>KCo</b>FI</a>
+        <p><img src="{{asset('images/Coat_of_arms_of_Cameroon.svg')}}" style="height: 130px;" alt="Cameroon coat of arms"></p>
     </div>
 
     <!-- /.login-logo -->

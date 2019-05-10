@@ -32,9 +32,9 @@ class ConvictionRecordDataTable extends DataTable
      */
     public function query(ConvictionRecord $model)
     {
-        return $model->newQuery()
-            ->join('convicts', 'conviction_records.convict_id', '=', 'convicts.id')
-            ->select('conviction_records.*', 'convicts.name', 'convicts.surname', 'convicts.id_card_number');
+        return $model->newQuery()->with('convict')
+//            ->join('convicts', 'conviction_records.convict_id', '=', 'convicts.id')
+            ->select('conviction_records.*');
     }
 
     /**
@@ -71,10 +71,19 @@ class ConvictionRecordDataTable extends DataTable
     {
         return [
             [
-                'data' => 'name',
-                'name' => 'name',
-                'title' => 'Convict',
-                'searchable' => 'false',
+                'data' => 'convict.name',
+                'name' => 'convict.name',
+                'title' => 'Name',
+            ],
+            [
+                'data' => 'convict.surname',
+                'name' => 'convict.surname',
+                'title' => 'Surname',
+            ],
+            [
+                'data' => 'convict.id_card_number',
+                'name' => 'convict.id_card_number',
+                'title' => 'Id Card Number',
             ],
             [
                 'data' => 'date_of_conviction',
